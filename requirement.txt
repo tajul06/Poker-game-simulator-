@@ -1,1 +1,27 @@
-# No external dependencies required - using Python standard library only
+# Texas Hold'em Poker Game Simulator Requirements
+# This project uses only Python standard library modules for maximum compatibility
+
+# Core Dependencies (All built-in):
+# - random: For shuffling deck and AI randomization
+# - enum: For card suits, ranks, and hand rankings  
+# - typing: For type hints and better code documentation
+# - collections: For Counter to evaluate poker hands
+# - itertools: For combinations when evaluating best 5-card hands
+# - os: For clearing terminal screen
+# - sys: For system operations and path management
+# - time: For dramatic pauses in AI actions
+# - math: For mathematical calculations in expectiminimax algorithm
+
+# Optional Dependencies (for enhanced experience):
+# colorama==0.4.6  # For better Windows terminal color support (uncomment if needed)
+
+# Development Dependencies (for testing and development):
+# pytest>=7.0.0    # For unit testing (uncomment for development)
+# pytest-cov>=4.0.0  # For test coverage (uncomment for development)
+# black>=22.0.0    # For code formatting (uncomment for development)
+# mypy>=1.0.0      # For type checking (uncomment for development)
+
+# Installation Instructions:
+# 1. No external dependencies required for basic functionality
+# 2. Run: python main.py
+# 3. For development, uncomment desired packages above and run: pip install -r requirement.txt
