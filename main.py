@@ -185,8 +185,12 @@ class PokerGameController:
         # Players act in turn until betting is complete
         betting_complete = False
         players_acted = set()
+        last_bet_amount = self.game_state.current_bet
+        max_rounds = len(self.players) * 4  # Safety limit to prevent infinite loops
+        round_count = 0
         
-        while not betting_complete:
+        while not betting_complete and round_count < max_rounds:
+            round_count += 1
             active_players = self.game_state.get_active_players()
             
             if len(active_players) <= 1:
@@ -211,14 +215,23 @@ class PokerGameController:
                 time.sleep(2)  # Pause for dramatic effect
             
             # Process action
+            old_bet_amount = self.game_state.current_bet
             self._process_player_action(current_player, action, amount)
             players_acted.add(current_player)
+            
+            # If someone raised, clear the acted set for players who need to respond
+            if self.game_state.current_bet > old_bet_amount:
+                # Only keep the player who just raised in the acted set
+                players_acted = {current_player}
             
             # Move to next player
             self.game_state.current_player = (self.game_state.current_player + 1) % len(self.players)
             
             # Check if betting round is complete
             betting_complete = self._is_betting_round_complete(players_acted)
+        
+        if round_count >= max_rounds:
+            self.cli.print_colored("⚠️  Betting round reached maximum rounds limit", 'yellow')
         
         # Show betting summary
         self.cli.show_betting_summary(self.game_state)
